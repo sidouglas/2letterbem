@@ -1,0 +1,36 @@
+{
+  "name": "2letterbem",
+  "version": "1.0.0",
+  "description": "Renames css classes to 2 letters to further compress css files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "config": {
+    "twoLetterBem": {
+      "cssPath" : "./test/bootstrap.min.css",
+      "outputCssPath": "./test/compiled.css",
+      "outputJsonPath": "./test/twoletter.json",
+      "whiteList": [
+        ".whitelist"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sidouglas/2letterbem.git"
+  },
+  "author": "Simon Douglas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sidouglas/2letterbem/issues"
+  },
+  "homepage": "https://github.com/sidouglas/2letterbem#readme",
+  "dependencies": {
+    "css": "^2.2.4",
+    "lodash": "^4.17.15",
+    "string-permutation": "^0.1.0",
+    "yargs": "^15.3.1"
+  }
+}

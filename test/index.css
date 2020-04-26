@@ -1,0 +1,20 @@
+.one, .two {
+    border: 1px solid red;
+}
+
+.one__block {
+    border: 1px solid green;
+}
+
+.one__block::after {
+    content: 'test';
+    display: block;
+}
+
+.two.one__block::after {
+    content: 'joined';
+}
+
+.whitelist .two {
+    border: 1px solid pink;
+}
