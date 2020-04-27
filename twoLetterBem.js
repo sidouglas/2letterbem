@@ -1,12 +1,18 @@
 const _escapeRegExp = require('lodash/escapeRegExp')
 const extract = require('css')
+const extractClassFromString = require('string-extract-class-names')
 const fs = require('fs')
 const path = require('path')
 const permutation = require('string-permutation')
 
 module.exports = class TwoLetterBem {
 
-  constructor (userArgs, packageJsonFile) {
+  constructor (userArgs = {}, packageJsonFile = {}) {
+
+    this.letters = null
+    this.cssContents = null
+    this.rules = []
+
     this.config = {
       cssPath: userArgs.i,
       jsonSpace: userArgs.s || 2,
@@ -28,49 +34,38 @@ module.exports = class TwoLetterBem {
       console.error('Specify css input in package scripts: -i ./yourfile.css\n')
       process.exit(1)
     }
-
-    this.letters = null
-    this.cssContents = null
-    this.rules = []
-
-    this.init()
   }
 
   init () {
+    const { cssPath, outputCssPath, outputJsonPath } = this.config
     this.setPermutationLetters()
-    this.cssContents = fs.readFileSync(this.config.cssPath, 'utf-8')
+    this.cssContents = fs.readFileSync(cssPath, 'utf-8')
     this.setHashMap()
 
-    this.writeFile(this.config.outputCssPath, this.getCss())
-    this.writeFile(this.config.outputJsonPath, this.getJson())
+    this.writeFile(outputCssPath, this.getCss())
+    this.writeFile(outputJsonPath, this.getJson())
   }
 
   extractRules (next, acc) {
     next.selectors.forEach((selector) => {
-      selector.split(' ').forEach((className) => {
-        const match = className.match(/\.-?[\w-]+[_a-zA-Z0-9-]/)
-        if (match
-          && match[0]
-          // don't add a duplicate class
-          && !acc[match[0]]
-          // don't include a whitelisted class name
-          && !this.config.whiteList.includes(match[0])
-          // don't add js prefixed class names
-          && !match[0].startsWith('\.js')
-        ) {
-          //.originalClass: .compressedClassName
-          acc[match[0]] = `.${this.letters.shift()}`
-        }
+      selector.split(' ').forEach((classNameList) => {
+        extractClassFromString(classNameList).forEach((className) => {
+          if (className.startsWith('.')
+            && !acc[className]
+            && !this.config.whiteList.includes(className)
+            && !className.startsWith('\.js')) {
+            acc[className] = `.${this.letters.shift()}`
+          }
+        })
       })
     })
+
     return acc
   }
 
   getCss () {
-    return Object.entries(this.rules).reduce((acc, [k, value]) => {
-      const key = `${_escapeRegExp(k)}(?=[{\\s\\.\\,:>~])`
-
-      acc = acc.replace(new RegExp((key), 'g'), value)
+    return Object.entries(this.rules).reduce((acc, [key, value]) => {
+      acc = acc.replace(new RegExp((`${_escapeRegExp(key)}`), 'g'), value)
       return acc
     }, this.cssContents)
   }
@@ -104,7 +99,7 @@ module.exports = class TwoLetterBem {
   }
 
   writeFile (outputFile, contents) {
-    fs.writeFile(outputFile, contents, 'utf8', (error) => {
+    return fs.writeFile(outputFile, contents, 'utf8', (error) => {
       const extension = path.extname(outputFile).slice(1)
       if (error) {
         console.log(`An error occurred while writing ${extension} to File.`)
