@@ -6,7 +6,9 @@ This is standalone package that is run as a npm script.
 Example - bootstrap 4.4.1 css minified and gzipped:
 * bootstrap.min.css.gz -> 23.6KB
 * 2 letter bem version -> 22.8KB
-* However, this can be used with html, to shave a kilobyte or two. This is  obfusicate your work too.
+* However, this can be used with html, to shave a kilobyte or two. 
+This could be used to obfuscate your work.
+
 input css file:
 ```
 .something { ... }
