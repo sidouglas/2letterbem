@@ -1,7 +1,8 @@
 # 2 Letter Bem
 
-Compresses your css classes down to a few characters ( probably 2 ), which you can then use in your html.
-This is standalone package that is run as a npm script.
+Compresses your css classes down to a few characters ( probably 2 ), which you can then use in your html via the json 
+file.
+
 ##### Compressing css this way + gzip = *negligible results*
 Example - bootstrap 4.4.1 css minified and gzipped:
 * bootstrap.min.css.gz -> 23.6KB
@@ -33,8 +34,9 @@ json:
 "active" "d"
 }
 ```
-Anything prepended with .js in your css is not compressed.
-You can specify a `whiteList` of classes that you don't want to be touched. They won't appear in the json file either. You can use the json file as dictionary now for your html. 
+Anything prepended with .js in your css is not shortened.
+You can specify a `whiteList` of classes that you don't want to be shortened. They won't appear in the json file either. 
+You can use the json file as dictionary now for your html. 
 
 Simple example in PHP:
 ```
@@ -70,7 +72,7 @@ In package.json as an example:
   dependencies: { ... }
   devDependencies: { ... }
   scripts: {
-   "2letterbem": "node ./node_modules/2letterbem/2letterbem.js --i ./inputFile.css --o ./outputFile.css --j './jsonMapFile.json"
+   "2letterbem": "node ./node_modules/2letterbem/2letterbem.js --i ./inputFile.css --o ./outputFile.css --j ./jsonMapFile.json"
   }
 ...
 ```
@@ -80,17 +82,18 @@ or everything in package.json config
   ...
   "config": {
     "2letterbem": {
-      "cssPath": "./inputFile.css",
-      "jsonSpace": 2,
-      "outputCssPath": "./outputFile.css", 
-      "outputJsonPath": "./jsonMapFile.json",
+      "cssPath": "./inputFile.css", //required
+      "jsonSpace": 2, //default is 2
+      "outputCssPath": "./twoletterbem.css", //default
+      "outputJsonPath": "./twoletterbem.json", //default
       "permutationArgs": {
-        "maxSize": 2,
-        "recursive": true
+        "maxSize": 2, // default you probably don't more than this 
+        "recursive": true // creates both single and two letter characters
       },
-      "permutationLetters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      "whiteList": [
-        ".is-active",
+      "permutationLetters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", // the list of characters to generate from
+      "whiteList": [ 
+        //these won't be shortened
+        ".is-active", 
         ".wf-inactive"
       ]
     }
