@@ -1,0 +1,24 @@
+.one,.two {
+    content:'';
+}
+.one.two {
+    content:'';
+}
+.one~.two>.three *{
+    content:'';
+}
+.one__block {
+    content:'';
+}
+.one__block::after {
+    content:'';
+}
+.two.one__block::after {
+    content:'';
+}
+.one+.two~.three {
+    content:'';
+}
+.whitelist .two {
+    content:'';
+}

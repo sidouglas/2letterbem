@@ -1,4 +1,4 @@
-const TwoLetterBem = require('./twoLetterBem');
+const TwoLetterBem = require('./');
 
 const yargs = require('yargs').argv
 

@@ -7,16 +7,6 @@
     "test": "jest",
     "start": "node index.js"
   },
-  "config": {
-    "twoLetterBem": {
-      "cssPath": "./tests/index.css",
-      "outputCssPath": "./tests/compiled.css",
-      "outputJsonPath": "./tests/twoletter.json",
-      "whiteList": [
-        ".whitelist"
-      ]
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sidouglas/2letterbem.git"

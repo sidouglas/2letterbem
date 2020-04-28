@@ -53,4 +53,52 @@ function klass($cssName){
 <div class="klass('something')"></div> renders as <div class="a"></div>
 ```
 
+### How to use
+
+In package.json as an example:
+```
+{
+...
+ "config": {
+    "2letterbem": {
+      "whiteList": [
+        ".is-active",
+        ".wf-inactive",
+      ]
+    }
+  },
+  dependencies: { ... }
+  devDependencies: { ... }
+  scripts: {
+   "2letterbem": "node ./node_modules/2letterbem/2letterbem.js --i ./inputFile.css --o ./outputFile.css --j './jsonMapFile.json"
+  }
+...
+```
+or everything in package.json config
+```
+{
+  ...
+  "config": {
+    "2letterbem": {
+      "cssPath": "./inputFile.css",
+      "jsonSpace": 2,
+      "outputCssPath": "./outputFile.css", 
+      "outputJsonPath": "./jsonMapFile.json",
+      "permutationArgs": {
+        "maxSize": 2,
+        "recursive": true
+      },
+      "permutationLetters": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "whiteList": [
+        ".is-active",
+        ".wf-inactive"
+      ]
+    }
+  },
+  scripts: {
+    "2letterbem": "node ./node_modules/2letterbem/2letterbem.js"
+  },
+  ...
+}
+```
 
