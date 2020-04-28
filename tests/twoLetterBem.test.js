@@ -1,12 +1,12 @@
-jest.mock('fs', () => ({ writeFile: jest.fn() }))
-const fs = require('fs')
-
-const TwoLetterBem = require('../')
+let TwoLetterBem = null
 
 describe('TwoLetterBem', () => {
+  beforeEach(() => {
+    TwoLetterBem = require('../')
+  })
   it('should die when no cssPath is present', () => {
     const mockExit = jest.spyOn(process, 'exit').
-      mockImplementation(code => code)
+      mockImplementation((code) => code)
 
     console.error = jest.fn()
 
@@ -59,6 +59,7 @@ describe('TwoLetterBem', () => {
 describe('TwoLetterBem test methods', () => {
   let instance
   beforeEach(() => {
+    TwoLetterBem = require('../')
     instance = new TwoLetterBem({
       i: './index.css',
       s: 0,
@@ -68,7 +69,8 @@ describe('TwoLetterBem test methods', () => {
       w: 'g',
     })
     instance.setPermutationLetters()
-    instance.cssContents = '*>.foo+.bar > .baz.q__u--x{}@media screen {.quux{}}'
+    instance.cssContents =
+      '*>.foo+.bar > .baz.q__u--x{}@media screen {.quux{}}'
   })
 
   it('should retrieve all the permutations', () => {
@@ -77,33 +79,42 @@ describe('TwoLetterBem test methods', () => {
 
   it('should set contents of the json file', () => {
     instance.setHashMap()
-    expect(instance.rules).toEqual((
-      {
-        '.foo': '.a',
-        '.bar': '.b',
-        '.baz': '.aa',
-        '.q__u--x': '.ab',
-        '.quux': '.ba',
-      }))
+    expect(instance.rules).toEqual({
+      '.foo': '.a',
+      '.bar': '.b',
+      '.baz': '.aa',
+      '.q__u--x': '.ab',
+      '.quux': '.ba',
+    })
     expect(JSON.parse(instance.getJson())).toEqual({
       foo: 'a',
       bar: 'b',
       baz: 'aa',
       'q__u--x': 'ab',
-      'quux': 'ba',
+      quux: 'ba',
     })
   })
 
   it('should set contents of the css file', () => {
     instance.setHashMap()
-    expect(instance.getCss()).toBe(('*>.a+.b > .aa.ab{}@media screen {.ba{}}'))
+    expect(instance.getCss()).toBe('*>.a+.b > .aa.ab{}@media screen {.ba{}}')
+  })
+})
+
+describe('TwoLetter css file interactions', () => {
+  let instance
+  beforeEach(() => {
+    TwoLetterBem = require('../')
+    instance = new TwoLetterBem({
+      i: './tests/index.css',
+      o: './tests/out.css',
+      j: './tests/out.json',
+      w: ['.whiteList'],
+    })
   })
 
-  it('should write a file', () => {
-    fs.writeFile.mockReturnValue('done')
-
-    instance.writeFile('test', 'contents')
-
-    expect(fs.writeFile).toHaveBeenCalled()
+  it('should correctly format a css file', () => {
+    instance.init()
+    expect(instance.getCss()).toMatchSnapshot()
   })
 })

@@ -37,11 +37,14 @@ module.exports = class TwoLetterBem {
   }
 
   init () {
-    const { cssPath, outputCssPath, outputJsonPath } = this.config
+    const { cssPath } = this.config
     this.setPermutationLetters()
     this.cssContents = fs.readFileSync(cssPath, 'utf-8')
     this.setHashMap()
+  }
 
+  save () {
+    const { outputCssPath, outputJsonPath } = this.config
     this.writeFile(outputCssPath, this.getCss())
     this.writeFile(outputJsonPath, this.getJson())
   }
@@ -64,8 +67,9 @@ module.exports = class TwoLetterBem {
   }
 
   getCss () {
-    return Object.entries(this.rules).reduce((acc, [key, value]) => {
-      acc = acc.replace(new RegExp((`${_escapeRegExp(key)}`), 'g'), value)
+    return Object.entries(this.rules).reduce((acc, [k, value]) => {
+      const key = `${_escapeRegExp(k)}(?=[{\\s\\.\\,:>~+])`
+      acc = acc.replace(new RegExp(key, 'g'), value)
       return acc
     }, this.cssContents)
   }

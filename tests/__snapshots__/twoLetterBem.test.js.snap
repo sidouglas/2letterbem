@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TwoLetter css file interactions should correctly format a css file 1`] = `
+".a,.b {
+    content:'';
+}
+.a.b {
+    content:'';
+}
+.a~.b>.c *{
+    content:'';
+}
+.d {
+    content:'';
+}
+.d::after {
+    content:'';
+}
+.b.d::after {
+    content:'';
+}
+.a+.b~.c {
+    content:'';
+}
+.e .b {
+    content:'';
+}
+"
+`;

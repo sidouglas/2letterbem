@@ -1,11 +1,27 @@
 {
   "name": "2letterbem",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Renames css classes to 2 letters to further compress css files.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node index.js"
+    "start": "node 2letterbem.js"
+  },
+  "config": {
+    "twoLetterBem": {
+      "cssPath": "./tests/index.css",
+      "outputCssPath": "./tests/compiled.css",
+      "outputJsonPath": "./tests/twoletter.json",
+      "whiteList": [
+        ".is-active",
+        ".no-svg",
+        ".no-vue",
+        ".vue",
+        ".wf-inactive",
+        ".no-keyboard-focus",
+        ".svg"
+      ]
+    }
   },
   "repository": {
     "type": "git",
@@ -24,6 +40,7 @@
     "css": "^2.2.4",
     "jest": "^25.4.0",
     "lodash": "^4.17.15",
+    "prettier": "^2.0.5",
     "string-extract-class-names": "^5.9.22",
     "string-permutation": "^0.1.0",
     "yargs": "^15.3.1"
