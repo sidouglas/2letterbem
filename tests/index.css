@@ -19,6 +19,6 @@
 .one+.two~.three {
     content:'';
 }
-.whitelist .two {
+.whiteList .two {
     content:'';
 }

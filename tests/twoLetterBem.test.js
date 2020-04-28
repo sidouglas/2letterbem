@@ -117,4 +117,8 @@ describe('TwoLetter css file interactions', () => {
     instance.init()
     expect(instance.getCss()).toMatchSnapshot()
   })
+  it('should preserve whitelisted css names', ()=> {
+    instance.init()
+    expect(instance.getCss().includes('.whiteList')).toBe(true)
+  })
 })

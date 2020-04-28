@@ -22,7 +22,7 @@ exports[`TwoLetter css file interactions should correctly format a css file 1`] 
 .a+.b~.c {
     content:'';
 }
-.e .b {
+.whiteList .b {
     content:'';
 }
 "
