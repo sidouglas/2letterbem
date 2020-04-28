@@ -1,6 +1,6 @@
 {
   "name": "2letterbem",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Renames css classes to 2 letters to further compress css files.",
   "main": "index.js",
   "scripts": {
