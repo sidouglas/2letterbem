@@ -1,7 +1,7 @@
 jest.mock('fs', () => ({ writeFile: jest.fn() }))
 const fs = require('fs')
 
-const TwoLetterBem = require('../twoLetterBem')
+const TwoLetterBem = require('../')
 
 describe('TwoLetterBem', () => {
   it('should die when no cssPath is present', () => {
